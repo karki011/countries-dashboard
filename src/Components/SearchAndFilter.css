@@ -1,0 +1,4 @@
+.search-and-filter {
+    display: flex;
+    justify-content: between;
+}
