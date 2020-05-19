@@ -66,3 +66,8 @@ Border Countries (countries listed as buttons, link to detail page)
   - BSF: Bold search font color
   - LSF: Lightweight search font color
 
+## Javascript:
+
+### Get all countries and return them to the console
+    - get https://restcountries.eu/rest/v2/all
+
