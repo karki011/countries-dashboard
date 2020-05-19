@@ -5,6 +5,8 @@
 ---
 ## Choose framework
 - React
+## Choose component library
+- Material UI
 ---
 ## Pages needed
 - Homepage
