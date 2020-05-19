@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleSelect() {
+export default function FilterField(props) {
   const classes = useStyles();
   const [region, setRegion] = React.useState('');
 
   const handleChange = (event) => {
     setRegion(event.target.value);
+    props.handleRegionSelection(event.target.value)
   };
 
   return (
@@ -34,7 +35,7 @@ export default function SimpleSelect() {
           onChange={handleChange}
         >
           <MenuItem value={"Africa"}>Africa</MenuItem>
-          <MenuItem value={"America"}>America</MenuItem>
+          <MenuItem value={"Americas"}>America</MenuItem>
           <MenuItem value={"Asia"}>Asia</MenuItem>
           <MenuItem value={"Europe"}>Europe</MenuItem>
           <MenuItem value={"Oceania"}>Oceania</MenuItem>

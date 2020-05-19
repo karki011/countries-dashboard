@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { TitleBar, SearchAndFilter, CountryCards} from "./Components"
+import { TitleBar, SearchAndFilter, CountryPreview} from "./Components"
 
 
 const COUNTRY_LIST_URL = "https://restcountries.eu/rest/v2/all"
@@ -9,35 +9,89 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      "page": "home",
-      "daymode": true,
+      page: "home",
+      daymode: true,
+      region: "all",
+      searchValue: "",
     };  
+    this.handlePageView = this.handlePageView.bind(this)
+    this.handleSortAndFilter = this.handleSortAndFilter.bind(this)
+    this.handleRegionSelection = this.handleRegionSelection.bind(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
+  }
+  
+  handlePageView(){
+    if(this.state.page === "home"){
+      return (
+        <div className="main-content">
+          <SearchAndFilter 
+            handleSearchChange={this.handleSearchChange}
+            handleRegionSelection={this.handleRegionSelection}
+          />
+          {this.handleSortAndFilter().map(country => (
+            <CountryPreview
+              key={country.name}
+              flagUrl={country.flag}
+              name={country.name}
+              population={country.population}
+              region={country.region}
+              capital={country.capital}
+            />
+            ))}
+        </div>
+      )
+  }
+}
+  handleSortAndFilter(){
+    if(this.state.countries){
+      if(this.state.region === "all" && this.state.searchValue === ""){
+        return this.state.countries
+      }
+      let filteredCountries = []
+      if(this.state.region !== "all"){
+          filteredCountries = this.state.countries.filter(country => {
+            return country.region === this.state.region
+          })
+      }
+      else {
+        filteredCountries = this.state.countries
+      }
+      filteredCountries = filteredCountries.filter(country => {
+        return country.name.toLowerCase().includes(this.state.searchValue.toLowerCase())
+      })
+      if(filteredCountries){
+        return filteredCountries
+      }
+      else{
+        return [{name: "No results found"}]
+      }
+    }
+    else {
+      return ["loading"]
+    }
   }
 
-  componentDidMount(){
+  handleRegionSelection(e){
+    this.setState({region: e})
+  }
+  
+  handleSearchChange(e){
+    this.setState({searchValue: e.target.value})
+  }
+
+  componentDidMount() {
     fetch(COUNTRY_LIST_URL)
     .then(results => results.json())
     .then(countries => {
-      this.setState({ countries })
+      this.setState({ countries: countries })
     })
   }
-
   render(){
-  const { countries = [] } = this.state;
   return (
     <div className="App">
       <TitleBar /> 
-      <SearchAndFilter />
-      {countries.map(country => (
-        <CountryCards
-          flagUrl={country.flag}
-          name={country.name}
-          population={country.population}
-          region={country.region}
-          capital={country.capital}
-        />
-      ))}
-      <CountryCards />
+      {this.handlePageView()}
+     
     </div>
   );
   }
