@@ -40,6 +40,11 @@
   }
 }
 
+.back-button{
+  position: relative;
+  left: 30px;
+}
+
 .country-list{
   display: flex;
   flex-wrap: wrap;

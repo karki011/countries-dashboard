@@ -53,7 +53,7 @@ class App extends React.Component {
     else {
       return(
         <div className="country-detail-view">
-          <Button variant="outlined" onClick={() => {
+          <Button className="backButton" variant="outlined" onClick={() => {
               this.handlePageChange("home");
             }}>Back</Button>
           <CountryDetail 
