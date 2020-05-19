@@ -43,6 +43,7 @@ export default function CountryPreview(props) {
             <p><b>Sub Region: </b> {props.country.subregion}</p>
             <p><b>Capital: </b> {props.country.capital}</p>
           </Typography>
+          <br />
           <Typography variant="body2" color="textSecondary" component="span">
             <p><b>Top Level Domain: </b>{props.country.topLevelDomain}</p>
             <p><b>Currencies: </b> {props.country.currencies.map(x =>(x.name + " "))}</p>
