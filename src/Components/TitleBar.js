@@ -9,7 +9,7 @@ export default function TitleBar(props){
                 Where in the world?
             </span>
             <span className="color-mode-toggle">
-                <Brightness2OutlinedIcon fontSize="small" /> Dark Mode
+                <Brightness2OutlinedIcon fontSize="small" /> Dark Mode Not Yet Implemented
             </span>
         </div>
     )

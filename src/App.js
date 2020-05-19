@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import { TitleBar, SearchAndFilter, CountryPreview} from "./Components"
+import Button from '@material-ui/core/Button';
+import { TitleBar, SearchAndFilter, CountryDetail, CountryPreview} from "./Components"
 
 
 const COUNTRY_LIST_URL = "https://restcountries.eu/rest/v2/all"
@@ -14,6 +15,7 @@ class App extends React.Component {
       region: "all",
       searchValue: "",
     };  
+    this.handlePageChange = this.handlePageChange.bind(this)
     this.handlePageView = this.handlePageView.bind(this)
     this.handleSortAndFilter = this.handleSortAndFilter.bind(this)
     this.handleRegionSelection = this.handleRegionSelection.bind(this)
@@ -28,7 +30,11 @@ class App extends React.Component {
             handleSearchChange={this.handleSearchChange}
             handleRegionSelection={this.handleRegionSelection}
           />
+          <div className="country-list">
           {this.handleSortAndFilter().map(country => (
+            <div onClick={() => {
+              this.handlePageChange(country.name);
+            }}>
             <CountryPreview
               key={country.name}
               flagUrl={country.flag}
@@ -37,11 +43,35 @@ class App extends React.Component {
               region={country.region}
               capital={country.capital}
             />
+            </div>
             ))}
+            </div>
         </div>
       )
+    }
+
+    else {
+      return(
+        <div className="country-detail-view">
+          <Button variant="outlined" onClick={() => {
+              this.handlePageChange("home");
+            }}>Back</Button>
+          <CountryDetail 
+            handlePageChange = {this.handlePageChange} 
+            country={this.state.countryDetail[0]} />
+        </div>
+      )
+    }
   }
-}
+
+  handlePageChange(countryName){
+    let countryDetails = this.state.countries.filter(country => {
+      return country.name === countryName
+    })
+    console.log(countryDetails, countryName)
+    this.setState({page: countryName, "countryDetail": countryDetails})
+  }
+
   handleSortAndFilter(){
     if(this.state.countries){
       if(this.state.region === "all" && this.state.searchValue === ""){

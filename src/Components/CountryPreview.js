@@ -23,7 +23,7 @@ export default function CountryPreview(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root + " country-preview"}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -34,10 +34,10 @@ export default function CountryPreview(props) {
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="span">
             <p><b>Population: </b> {props.population}</p>
             <p><b>Region: </b> {props.region}</p>
-            <p><b>Capital: </b> {props.capital}</p>}
+            <p><b>Capital: </b> {props.capital}</p>
           </Typography>
         </CardContent>
       </CardActionArea>
